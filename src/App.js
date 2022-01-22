@@ -19,7 +19,7 @@ function App() {
 
         <Routes>
           <Route path='/about' element={<About />} />
-          <Route path='/' element={<Main />} />
+          <Route path='/' element={<Main showAdd={showAddTasks} />} />
         </Routes>
         <Footer />
       </div>

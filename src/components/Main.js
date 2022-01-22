@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import Tasks from './Tasks'
 import AddTask from './AddTask'
 
-const Main = () => {
-  const [showAddTask, setShowAddTask] = useState(false)
+const Main = ({ showAdd }) => {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
@@ -11,25 +10,8 @@ const Main = () => {
       const tasksFromServer = await fetchTasks()
       setTasks(tasksFromServer)
     }
-
     getTasks()
   }, [])
-
-  // Fetch Tasks
-  const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/tasks')
-    const data = await res.json()
-
-    return data
-  }
-
-  // Fetch Task
-  const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`)
-    const data = await res.json()
-
-    return data
-  }
 
   // Add Task
   const addTask = async (task) => {
@@ -48,6 +30,22 @@ const Main = () => {
     // const id = Math.floor(Math.random() * 10000) + 1
     // const newTask = { id, ...task }
     // setTasks([...tasks, newTask])
+  }
+
+  // Fetch Tasks
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks')
+    const data = await res.json()
+
+    return data
+  }
+
+  // Fetch Task
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+
+    return data
   }
 
   // Delete Task
@@ -85,7 +83,7 @@ const Main = () => {
 
   return (
     <>
-      {showAddTask && <AddTask onAdd={addTask} />}
+      {showAdd && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
